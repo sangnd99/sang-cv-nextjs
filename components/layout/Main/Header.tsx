@@ -34,7 +34,10 @@ const Header: React.FC = () => {
             gap: '10px',
           }}
         >
-          <a>
+          <a
+            href="https://github.com/sangnd99/sang-cv-nextjs.git"
+            target="_blank"
+          >
             <Button
               startIcon={<GitHubIcon />}
               sx={{
