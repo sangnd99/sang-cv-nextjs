@@ -37,6 +37,7 @@ const Header: React.FC = () => {
           <a
             href="https://github.com/sangnd99/sang-cv-nextjs.git"
             target="_blank"
+            rel="noreferrer"
           >
             <Button
               startIcon={<GitHubIcon />}
