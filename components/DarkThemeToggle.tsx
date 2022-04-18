@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 
-import SunIcon from 'components/SunIcon';
-import MoonIcon from 'components/MoonIcon';
+import SunIcon from 'components/icons/SunIcon';
+import MoonIcon from 'components/icons/MoonIcon';
 import { ColorModeContext } from 'pages/_app';
 
 const DarkThemeToggle: React.FC = () => {

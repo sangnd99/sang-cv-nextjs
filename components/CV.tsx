@@ -27,9 +27,16 @@ export const CVName: React.FC<{
   children: React.ReactNode;
   primary?: boolean;
   value?: string;
-}> = ({ children, primary, value = '' }) => (
+  Icon?: React.ReactElement;
+  color?: string;
+}> = ({ children, primary, value = '', Icon, color }) => (
   <Box
-    sx={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      flexWrap: 'wrap',
+    }}
   >
     <Typography
       variant="body1"
@@ -38,9 +45,12 @@ export const CVName: React.FC<{
     >
       {children}
     </Typography>
-    <Typography variant="body2" fontWeight="600">
-      {value}
-    </Typography>
+    <Box display="flex" alignItems="center" gap="5px">
+      {Icon}
+      <Typography variant="body2" fontWeight="600" color={color}>
+        {value}
+      </Typography>
+    </Box>
   </Box>
 );
 

@@ -10,7 +10,7 @@ import { CVSection, CVYear, CVName, CVParagraph } from 'components/CV';
 const Home: NextPage = () => {
   const theme = useTheme();
   return (
-    <Content>
+    <Content title="About me">
       <Box
         sx={{
           display: 'flex',

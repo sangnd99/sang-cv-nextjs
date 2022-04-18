@@ -7,13 +7,17 @@ const Badge: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <Typography
       variant="body2"
+      component="span"
       sx={{
         background: useColorModeValue(
           lightBlue[200],
           hex2rgba(lightBlue[300], 0.3),
         ),
+        display: 'inline-block',
         width: 'max-content',
+        height: 'max-content',
         padding: '2px 5px',
+        mr: '10px',
         color: useColorModeValue(grey[700], lightBlue[300]),
         fontWeight: 600,
       }}

@@ -10,7 +10,7 @@ const Header: React.FC = () => {
     <Box
       sx={{
         width: '100%',
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
         zIndex: 9999,
         backdropFilter: 'blur(10px)',

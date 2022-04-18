@@ -8,7 +8,7 @@ import Content from 'components/layout/Content';
 
 const NotFound: NextPage = () => {
   return (
-    <Content>
+    <Content title="Not found">
       <Box display="flex" flexDirection="column" alignItems="center" gap="20px">
         <Box
           display="flex"
