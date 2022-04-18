@@ -68,7 +68,7 @@ const listSkills = [
     childrens: ['Javascript', 'Typescript', 'HTML/CSS', 'SASS'],
   },
   {
-    heading: 'Frontend frameworks',
+    heading: 'Frontend frameworks & libraries',
     childrens: ['Reactjs', 'Nextjs', 'Tailwindcss'],
   },
   {
