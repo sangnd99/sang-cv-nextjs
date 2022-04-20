@@ -8,7 +8,7 @@ import {
 import { useMemo, useState, createContext, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
-import '../styles/globals.css';
+import 'styles/globals.css';
 import { getDesignTokens } from 'styles/theme';
 import Main from 'components/layout/Main';
 

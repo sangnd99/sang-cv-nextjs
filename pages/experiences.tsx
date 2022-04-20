@@ -52,7 +52,9 @@ const Experiences: NextPage = () => {
                 >
                   Project:
                 </CVName>
-                <Paragraph>{description}</Paragraph>
+                <Box marginBottom="10px">
+                  <Paragraph>{description}</Paragraph>
+                </Box>
 
                 <Typography variant="body2">
                   <Badge>Responsibility</Badge> {responsibility}
