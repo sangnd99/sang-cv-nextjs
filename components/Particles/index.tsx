@@ -14,7 +14,7 @@ let particlesArrays: ParticlesEngine[] = [];
 const init = (canvas: HTMLCanvasElement, color: string) => {
   particlesArrays = [];
   if (canvas) {
-    const particlesNumbers = (canvas.width * canvas.height) / 10000;
+    const particlesNumbers = (canvas.width * canvas.height) / 9000;
     for (let i = 0; i < particlesNumbers; ++i) {
       const x = Math.random() * canvas.width;
       const y = Math.random() * canvas.height;
@@ -77,12 +77,12 @@ const Particles: React.FC<ParticlesProps> = ({
     cancelAnimationFrame(callbackKeyRef.current);
     if (canvasRef && canvasRef.current) {
       const canvas = canvasRef.current;
-      // initial canvas
-      init(canvas, particleColor || 'white');
-      animate();
       // set default width and height for canvas
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      // initial canvas
+      init(canvas, particleColor || 'white');
+      animate();
       // change width and height when resize
       window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
