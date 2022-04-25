@@ -1,7 +1,7 @@
 import { useEffect, useRef, memo } from 'react';
 import Box from '@mui/material/Box';
 
-import ParticlesEngine from './particles-engine';
+import ParticlesEngine, { MouseType } from './particles-engine';
 import { hex2rgba } from 'utils';
 
 interface ParticlesProps {
@@ -9,46 +9,7 @@ interface ParticlesProps {
   particleLine?: string;
 }
 
-let particlesArrays: ParticlesEngine[] = [];
-
-const init = (canvas: HTMLCanvasElement, color: string) => {
-  particlesArrays = [];
-  if (canvas) {
-    const particlesNumbers = (canvas.width * canvas.height) / 9000;
-    for (let i = 0; i < particlesNumbers; ++i) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const size = Math.random() * 3;
-      const directionX = Math.random() * 2 - 1;
-      const directionY = Math.random() * 2 - 1;
-      particlesArrays.push(
-        new ParticlesEngine(canvas, x, y, directionX, directionY, size, color),
-      );
-    }
-  }
-};
-
-const connect = (ctx: CanvasRenderingContext2D, color: string) => {
-  const len = particlesArrays.length;
-  let opacity = 1;
-  const availableDistance = 100;
-  for (let i = 0; i < len; ++i) {
-    for (let j = i; j < len; ++j) {
-      const dx = particlesArrays[i].x - particlesArrays[j].x;
-      const dy = particlesArrays[i].y - particlesArrays[j].y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance < availableDistance) {
-        opacity = 1 - distance / availableDistance;
-        ctx.beginPath();
-        ctx.strokeStyle = hex2rgba(color, opacity);
-        ctx.lineWidth = 0.2;
-        ctx.moveTo(particlesArrays[i].x, particlesArrays[i].y);
-        ctx.lineTo(particlesArrays[j].x, particlesArrays[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-};
+const MOUSE_DIVISOR = 7000;
 
 const Particles: React.FC<ParticlesProps> = ({
   particleColor,
@@ -56,6 +17,63 @@ const Particles: React.FC<ParticlesProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const callbackKeyRef = useRef(-1);
+
+  let particlesArrays: ParticlesEngine[] = [];
+
+  let mouse: MouseType = {
+    x: null,
+    y: null,
+    radius: 0,
+  };
+
+  const init = (canvas: HTMLCanvasElement, color: string) => {
+    particlesArrays = [];
+    if (canvas) {
+      const particlesNumbers = (canvas.width * canvas.height) / 8000;
+      for (let i = 0; i < particlesNumbers; ++i) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const size = Math.random() * 3;
+        const directionX = Math.random() * 2 - 1;
+        const directionY = Math.random() * 2 - 1;
+        particlesArrays.push(
+          new ParticlesEngine(
+            canvas,
+            mouse,
+            x,
+            y,
+            directionX,
+            directionY,
+            size,
+            color,
+          ),
+        );
+      }
+    }
+  };
+
+  const connect = (ctx: CanvasRenderingContext2D, color: string) => {
+    const len = particlesArrays.length;
+    let opacity = 1;
+    const availableDistance = 100;
+    for (let i = 0; i < len; ++i) {
+      for (let j = i; j < len; ++j) {
+        const dx = particlesArrays[i].x - particlesArrays[j].x;
+        const dy = particlesArrays[i].y - particlesArrays[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < availableDistance) {
+          opacity = 1 - distance / availableDistance;
+          ctx.beginPath();
+          ctx.strokeStyle = hex2rgba(color, opacity);
+          ctx.lineWidth = 0.2;
+          ctx.moveTo(particlesArrays[i].x, particlesArrays[i].y);
+          ctx.lineTo(particlesArrays[j].x, particlesArrays[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  };
+
   const animate = () => {
     if (canvasRef && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -80,6 +98,8 @@ const Particles: React.FC<ParticlesProps> = ({
       // set default width and height for canvas
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      // calculate mouse radius
+      mouse.radius = (canvas.width * canvas.height) / MOUSE_DIVISOR;
       // initial canvas
       init(canvas, particleColor || 'white');
       animate();
@@ -87,24 +107,45 @@ const Particles: React.FC<ParticlesProps> = ({
       window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        // calculate mouse radius
+        mouse.radius = (canvas.width * canvas.height) / MOUSE_DIVISOR;
       });
       return () => {
         window.removeEventListener('resize', () => {
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
+          // calculate mouse radius
+          mouse.radius = (canvas.width * canvas.height) / MOUSE_DIVISOR;
         });
       };
     }
   }, [particleColor, particleLine]);
+
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+  ) => {
+    mouse.x = e.pageX;
+    mouse.y = e.pageY;
+  };
+
+  const handleMouseOut = () => {
+    mouse.x = null;
+    mouse.y = null;
+  };
   return (
     <Box
       sx={{
         position: 'fixed',
         inset: 0,
-        zIndex: -1,
+        zIndex: 0,
       }}
     >
-      <canvas ref={canvasRef} style={{ display: 'block' }}></canvas>
+      <canvas
+        ref={canvasRef}
+        onMouseMove={handleMouseMove}
+        onMouseOut={handleMouseOut}
+        style={{ display: 'block' }}
+      ></canvas>
     </Box>
   );
 };
