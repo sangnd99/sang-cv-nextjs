@@ -16,7 +16,7 @@ const Experiences: NextPage = () => {
     <Content title="Experiences">
       <Heading>Work</Heading>
       <Box sx={{ display: 'grid', gap: '10px' }}>
-        <CVYear>March 2021 - April 2022</CVYear>
+        <CVYear>March 2021 - July 2022</CVYear>
         <CVName value="(Intern & official staff)">
           USUM Software Co., Ltd
         </CVName>

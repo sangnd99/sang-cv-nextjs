@@ -15,7 +15,7 @@ const Skills: NextPage = () => {
           gap: '30px',
         }}
       >
-        {listSkills.map(({ heading, childrens }) => (
+        {listSkills.map(({ heading, children }) => (
           <Box key={`skills-${randomId()}`}>
             <Typography
               variant="subtitle1"
@@ -34,7 +34,7 @@ const Skills: NextPage = () => {
                 rowGap: '10px',
               }}
             >
-              {childrens.map((item) => (
+              {children.map((item) => (
                 <Typography
                   sx={{
                     display: 'flex',
@@ -65,18 +65,18 @@ export default Skills;
 const listSkills = [
   {
     heading: 'Programing languages',
-    childrens: ['Javascript', 'Typescript', 'HTML/CSS', 'SASS'],
+    children: ['Javascript', 'Typescript', 'HTML5/CSS3', 'SASS'],
   },
   {
     heading: 'Frontend frameworks & libraries',
-    childrens: ['Reactjs', 'Nextjs', 'Tailwindcss'],
+    children: ['Reactjs', 'Nextjs', 'Tailwindcss'],
   },
   {
-    heading: 'Version control',
-    childrens: ['Git (Github, Gitlab)'],
+    heading: 'Source control',
+    children: ['Git (Github, Gitlab)'],
   },
   {
     heading: 'Text editor & Tools',
-    childrens: ['Visual studio code', 'Neovim', 'Figma'],
+    children: ['Visual studio code', 'Neovim', 'Figma'],
   },
 ];
